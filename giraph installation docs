@@ -1,0 +1,111 @@
+// on cslab
+su - cslab
+// password: 543
+
+sudo gedit /etc/hosts
+# add ip add of this machine and name of this node in this file.
+
+sudo addgroup hadoop
+sudo adduser lab hadoop
+
+sudo apt-get install ssh
+
+cd /usr/local/
+
+sudo wget http://archive.apache.org/dist/hadoop/core/hadoop-2.4.0/hadoop-2.4.0.tar.gz
+
+sudo tar xzf hadoop-2.4.0.tar.gz
+
+sudo mv hadoop-2.4.0 hadoop
+
+sudo chown -R lab:hadoop hadoop
+
+// on lab
+
+gedit $HOME/.bashrc
+#paste following at the end
+
+export HADOOP_HOME=/usr/local/hadoop
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+
+#open hadoop-env.sh from following command
+source .bashrc
+gedit $HADOOP_HOME/etc/hadoop/hadoop-env.sh
+
+#add following lines to hadoop-env.sh
+
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export HADOOP_CONF_DIR=${HADOOP_CONF_DIR:-"/etc/hadoop"}
+export HADOOP_OPTS="$HADOOP_OPTS -Djava.net.preferIPv4Stack=true -Djava.library.path=$HADOOP_PREFIX/lib"
+export HADOOP_COMMON_LIB_NATIVE_DIR=${HADOOP_PREFIX}/lib/native
+
+#open core-sitexml and replace by following:
+gedit $HADOOP_HOME/etc/hadoop/core-site.xml
+## find from mail
+
+
+#run following commands after this in cslab
+
+sudo mkdir -p /app/hadoop/tmp
+sudo chown -R lab:hadoop /app/hadoop/tmp
+sudo chmod 750 /app/hadoop/tmp
+
+#open hdfs-site.xml and replace by follwing:
+gedit $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+## find from mail
+
+
+#open mapred-site.xml and replace by following:
+gedit $HADOOP_HOME/etc/hadoop/mapred-site.xml
+## find from mail
+
+
+#open yarn-site.xml and replace by following:
+gedit $HADOOP_HOME/etc/hadoop/yarn-site.xml
+## find from mail
+
+# add ssh key by follwoing:
+ssh-keygen -t rsa -P ""
+cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+
+#edit slaves: replace with this
+hdnode0(number of this node)
+
+
+### running hadoop
+
+### install giraph
+
+// on cslab
+
+sudo apt-get install maven
+cd /usr/local/
+sudo git clone https://github.com/apache/giraph.git
+sudo chown -R lab:hadoop giraph
+
+
+// on lab
+
+gedit $HOME/.bashrc
+#paste following at the end
+
+export GIRAPH_HOME=/usr/local/giraph
+
+#upadte source
+souce $HOME/.bashrc
+
+
+cd $GIRAPH_HOME
+mvn package -DskipTests
+
+### Giraph install. Run giraph
+
+
+
+
+#########################################################################
+
+Ref links:
+http://giraph.apache.org/quick_start.html
+https://lab.hypotheses.org/1207
+
