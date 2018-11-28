@@ -92,11 +92,16 @@ gedit $HOME/.bashrc
 export GIRAPH_HOME=/usr/local/giraph
 
 #upadte source
-souce $HOME/.bashrc
+source $HOME/.bashrc
 
 
 cd $GIRAPH_HOME
-mvn package -DskipTests
+mvn -Phadoop_yarn -Dhadoop.version=2.4.0 -DskipTests package
+
+
+cp /usr/local/giraph/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-2.4.0-jar-with-dependencies.jar $HADOOP_HOME/share/hadoop/yarn/lib/
+cp $GIRAPH_HOME/giraph-examples/target/ $HADOOP_HOME/share/hadoop/yarn/lib/
+
 
 ### Giraph install. Run giraph
 
