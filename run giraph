@@ -31,7 +31,7 @@ $HADOOP_HOME/bin/hadoop dfs -copyFromLocal /tmp/tiny_graph.txt /home/lab/tiny_gr
 $HADOOP_HOME/bin/hadoop jar /usr/local/giraph/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-2.4.0-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimpleShortestPathsComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /home/lab/tiny_graph.txt -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /home/lab/shortestpaths -w 1 -ca giraph.SplitMasterWorker=false
 
 
-$HADOOP_HOME/bin/hadoop dfs -cat /home/lab//shortestpaths/p* 
+$HADOOP_HOME/bin/hadoop dfs -cat /home/lab/shortestpaths/p* 
 
 
 
